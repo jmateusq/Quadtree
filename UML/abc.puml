@@ -1,0 +1,93 @@
+@startuml Diagrama de Classes
+skinparam DefaultTextAlignment center
+top to bottom direction
+'Declaração das Classes
+
+
+'INICIO QuadtreeNode
+class QuadtreeNode{
+    'Atributos
+    {field} position_x : int
+    {field} position_y : int
+    {field} width : int
+    {field} height : int
+    {field} color : int(homogenea) or NoneType(heterogenea)
+    {field} children : QuadtreeNode[4]
+
+    'Metodos
+    {method} mean_area(image as NumPy array, position_x, position_y, width, height)
+    {method} build_quadtree(image as NumPy array, position_x, position_y, width, height)
+    {method} display_inverted_image(QuadtreeNode, image as NumPy array)
+    {method} display_edge(QuadtreeNode, image as NumPy array)
+    {method} compress_image_lossQuality(QuadtreeNode, image as NumPy array, CompressFactor as int)
+}
+
+class QuadtreeNode_self{}
+
+QuadtreeNode "1" -- "[1..4]"QuadtreeNode_self
+
+'Explicações dos métodos
+note right of QuadtreeNode::mean_area
+    Divide a imagem em duas e verifica se o conteúdo do filho é homogeneo
+endnote
+
+note right of QuadtreeNode::build_quadtree
+    Constroi a Quadtree recursivamente a partir da imagem
+endnote
+
+note left of QuadtreeNode::display_inverted_image
+    Mostra imagem invertida
+endnote
+
+note left of QuadtreeNode::display_edge
+    Mostra borda da imagem
+endnote
+
+note left of QuadtreeNode::compress_image_lossQuality
+    Comprime a imagem diminuindo a definição da borda PERDENDO DADOS
+endnote
+'FIM QuadtreeNode
+
+
+
+
+'INICIO LinearImage
+class LinearImage{
+    'Atributos
+    {field} position_x : int
+    {field} position_y : int
+    {field} color : int
+
+    'Metodos
+    {method} build_vector_image(image as NumPy array)
+    {method} display_inverted_image(image as NumPy array)
+    {method} display_edge(image as NumPy array)
+    {method} compress_image_lossQuality(image as NumPy array, CompressFactor as int)
+    {method} compress_image(image as NumPy array)
+}
+
+'Explicações dos métodos
+note right of LinearImage::build_vector_image
+    Constroi uma matriz que armazena a poisção e a cor de cada pixel
+endnote
+
+note left of LinearImage::display_inverted_image
+    Mostra imagem invertida
+endnote
+
+note left of LinearImage::display_edge
+    Mostra borda da imagem
+endnote
+
+note left of LinearImage::compress_image_lossQuality
+    Comprime a imagem diminuindo a definição da borda PERDENDO DADOS 
+    A ideia é pegar pixels adjacentes e mesclar
+endnote
+
+note right of LinearImage::compress_image
+    Comprime a imagem usando algoritmo de redução de Redundancias
+    A ideia é comparar o que ocupa menos espaço para grandes volumes Quadtrees ou um algoritmo de compressão por repetição
+endnote
+'FIM LinearImage
+
+@enduml
