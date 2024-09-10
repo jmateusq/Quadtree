@@ -3,7 +3,6 @@ from PIL import Image
 import time
 import cv2
 from pympler import asizeof
-import matplotlib.pyplot as plt
 import warnings
 import os
 import platform
@@ -213,12 +212,13 @@ option_process = -1
 show_image = 0
 
 while(option != 0):
+    option_process=-1
     # Carregar a imagem
     print("=-"*10 + "Qual imagem você deseja processar" + "=-"*10)
     print("1 - Homogênea")
     print("2 - Heterogênea")
     print("3 - Intermediaria")
-    print("=-"*33)
+    print("=-"*36)
     while(option<0 or option>3):
         option = int(input("Selecione uma opção pelo número \n"))
     if option == 1:
